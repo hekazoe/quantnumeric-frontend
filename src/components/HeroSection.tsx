@@ -46,8 +46,8 @@ const HeroSection = () => {
                 View Markets
                 <TrendingUp className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 onClick={() => scrollToSection("about")}
                 style={{ backgroundColor: '#090b0f', color: 'white' }}
                 className="hover:opacity-90 hidden sm:block"
@@ -56,7 +56,7 @@ const HeroSection = () => {
               </Button>
             </div>
 
-            <p className="text-base md:text-xl text-black dark:text-neutral-200 max-w-2xl mx-auto order-3 mt-4 md:mt-0">
+            <p className="text-base md:text-xl text-black dark:text-neutral-200 max-w-2xl mx-auto order-3 mt-8 md:mt-6">
               QuantNumeric aggregates quantitative data, sentiment indicators, economic news, and macro-economic events
               into one interface.
             </p>

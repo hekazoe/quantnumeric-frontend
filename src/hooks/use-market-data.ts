@@ -9,13 +9,26 @@ type MarketSummaryResponse = {
   fearGreed: FearGreedIndex | null;
 };
 
-const POLL_MS = 8000; // 8 seconds - refresh every 8 seconds
+type AssetRanking = {
+  rank: number;
+  name: string;
+  symbol: string;
+  marketCap: number;
+  price: string;
+  change24h: string;
+  type: 'stock' | 'crypto' | 'commodity';
+  logoUrl: string;
+};
+
+const POLL_MS = 3000; // 3 seconds - satisfy Crypto refresh rate (Stocks cached by backend)
+const RANKINGS_POLL_MS = 60000; // 1 minute (rankings update hourly on backend)
 
 export function useMarketData() {
   const [indices, setIndices] = useState<MarketIndex[]>([]);
   const [cryptoAssets, setCryptoAssets] = useState<AssetQuote[]>([]);
   const [stockAssets, setStockAssets] = useState<AssetQuote[]>([]);
   const [fearGreed, setFearGreed] = useState<FearGreedIndex | null>(null);
+  const [rankings, setRankings] = useState<AssetRanking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,7 +58,7 @@ export function useMarketData() {
       setCryptoAssets(data.crypto ?? []);
       setStockAssets(data.stocks ?? []);
       setFearGreed(data.fearGreed ?? null);
-      
+
       // Debug logging
       console.log('📊 Market data received:', {
         indices: data.indices?.length || 0,
@@ -53,7 +66,7 @@ export function useMarketData() {
         stocks: data.stocks?.length || 0,
         cryptoData: data.crypto,
       });
-      
+
       setError(null);
     } catch (err) {
       const message =
@@ -62,6 +75,26 @@ export function useMarketData() {
       console.error("Market data fetch error:", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchRankings = async () => {
+    try {
+      const url = `${API_ENDPOINTS.rankings}?t=${Date.now()}`;
+      const res = await fetch(url, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      });
+      if (!res.ok) {
+        throw new Error(`Rankings API error! status: ${res.status}`);
+      }
+      const data: AssetRanking[] = await res.json();
+      setRankings(data);
+      console.log('🏆 Rankings received:', data.length, 'assets');
+    } catch (err) {
+      console.error("Rankings fetch error:", err);
     }
   };
 
@@ -86,13 +119,37 @@ export function useMarketData() {
     };
   }, []);
 
+  // Separate useEffect for rankings polling
+  useEffect(() => {
+    let cancelled = false;
+    let timer: number | undefined;
+
+    const loop = async () => {
+      if (cancelled) return;
+      await fetchRankings();
+      if (cancelled) return;
+      timer = window.setTimeout(loop, RANKINGS_POLL_MS);
+    };
+
+    loop();
+
+    return () => {
+      cancelled = true;
+      if (timer) {
+        window.clearTimeout(timer);
+      }
+    };
+  }, []);
+
   return {
     indices,
     cryptoAssets,
     stockAssets,
     fearGreed,
+    rankings,
     loading,
     error,
     refetch: fetchMarketData,
+    refetchRankings: fetchRankings,
   };
 }

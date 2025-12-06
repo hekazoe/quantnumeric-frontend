@@ -26,17 +26,16 @@ const Navigation = () => {
   };
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm' 
-          : 'bg-transparent'
-      }`}
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+        ? 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm'
+        : 'bg-transparent'
+        }`}
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo - Clickable */}
-          <button 
+          <button
             onClick={() => scrollToSection('hero')}
             className="flex items-center gap-2 md:gap-3 hover:opacity-80 transition-opacity -ml-2 md:ml-0"
           >
@@ -48,32 +47,32 @@ const Navigation = () => {
 
           {/* Navigation Links - Centered (Desktop) */}
           <div className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
-            <button 
-              onClick={() => scrollToSection('hero')} 
+            <button
+              onClick={() => scrollToSection('hero')}
               className={`hover:text-primary transition-colors font-bold text-xl ${!isScrolled ? 'text-foreground drop-shadow-sm' : 'text-foreground'}`}
             >
               Home
             </button>
-            <button 
-              onClick={() => scrollToSection('markets')} 
+            <button
+              onClick={() => scrollToSection('markets')}
               className={`hover:text-primary transition-colors font-bold text-xl ${!isScrolled ? 'text-foreground drop-shadow-sm' : 'text-foreground'}`}
             >
               Markets
             </button>
-            <button 
-              onClick={() => scrollToSection('news')} 
+            <button
+              onClick={() => scrollToSection('news')}
               className={`hover:text-primary transition-colors font-bold text-xl ${!isScrolled ? 'text-foreground drop-shadow-sm' : 'text-foreground'}`}
             >
               News
             </button>
-            <button 
-              onClick={() => scrollToSection('about')} 
+            <button
+              onClick={() => scrollToSection('about')}
               className={`hover:text-primary transition-colors font-bold text-xl ${!isScrolled ? 'text-foreground drop-shadow-sm' : 'text-foreground'}`}
             >
               About
             </button>
-            <button 
-              onClick={() => scrollToSection('contact')} 
+            <button
+              onClick={() => scrollToSection('contact')}
               className={`hover:text-primary transition-colors font-bold text-xl ${!isScrolled ? 'text-foreground drop-shadow-sm' : 'text-foreground'}`}
             >
               Contact
@@ -83,13 +82,13 @@ const Navigation = () => {
           {/* Right Side - Matrix Button (Desktop) + Mobile Menu */}
           <div className="flex items-center gap-4">
             {/* Matrix Button - Desktop Only */}
-            <Button 
+            <Button
               onClick={() => setShowComingSoon(true)}
-              className="hidden md:block bg-[#d21212] text-white hover:bg-[#b01010] px-8 text-lg"
+              className="hidden md:flex items-center justify-center bg-[#d21212] text-white hover:bg-[#b01010] px-8 text-lg"
             >
               Matrix
             </Button>
-            
+
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
@@ -102,7 +101,7 @@ const Navigation = () => {
                   {/* Navigation Links */}
                   <nav className="flex flex-col space-y-6 mt-8">
                     <SheetClose asChild>
-                      <button 
+                      <button
                         onClick={() => scrollToSection('hero')}
                         className="text-left text-xl font-bold hover:text-primary transition-colors"
                       >
@@ -110,7 +109,7 @@ const Navigation = () => {
                       </button>
                     </SheetClose>
                     <SheetClose asChild>
-                      <button 
+                      <button
                         onClick={() => scrollToSection('markets')}
                         className="text-left text-xl font-bold hover:text-primary transition-colors"
                       >
@@ -118,7 +117,7 @@ const Navigation = () => {
                       </button>
                     </SheetClose>
                     <SheetClose asChild>
-                      <button 
+                      <button
                         onClick={() => scrollToSection('news')}
                         className="text-left text-xl font-bold hover:text-primary transition-colors"
                       >
@@ -126,7 +125,7 @@ const Navigation = () => {
                       </button>
                     </SheetClose>
                     <SheetClose asChild>
-                      <button 
+                      <button
                         onClick={() => scrollToSection('about')}
                         className="text-left text-xl font-bold hover:text-primary transition-colors"
                       >
@@ -134,17 +133,17 @@ const Navigation = () => {
                       </button>
                     </SheetClose>
                     <SheetClose asChild>
-                      <button 
+                      <button
                         onClick={() => scrollToSection('contact')}
                         className="text-left text-xl font-bold hover:text-primary transition-colors"
                       >
                         Contact
                       </button>
                     </SheetClose>
-                    
+
                     {/* Matrix Button in Mobile Menu */}
                     <SheetClose asChild>
-                      <Button 
+                      <Button
                         onClick={() => setShowComingSoon(true)}
                         className="bg-[#d21212] text-white hover:bg-[#b01010] w-full text-lg mt-4"
                       >
@@ -153,7 +152,7 @@ const Navigation = () => {
                     </SheetClose>
                   </nav>
                 </div>
-                
+
                 {/* Copyright at bottom */}
                 <div className="mt-auto pt-6 border-t">
                   <p className="text-xs text-muted-foreground text-center">
@@ -165,7 +164,7 @@ const Navigation = () => {
           </div>
         </div>
       </div>
-      
+
       <ComingSoonModal open={showComingSoon} onOpenChange={setShowComingSoon} />
     </nav>
   );

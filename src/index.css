@@ -43,7 +43,7 @@ All colors MUST be HSL.
     --dark-card-foreground: 0 0% 98%;
 
     --light-gray: 0 0% 97%;
-    
+
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
 
@@ -84,7 +84,7 @@ All colors MUST be HSL.
     --dark-card-foreground: 0 0% 98%;
 
     --light-gray: 0 0% 15%;
-    
+
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
   }
@@ -95,8 +95,11 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html,
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 }
 
@@ -104,14 +107,15 @@ All colors MUST be HSL.
   0% {
     transform: translateX(0);
   }
+
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-33.333%);
   }
 }
 
 .news-ticker {
   display: flex;
-  animation: news-ticker-scroll 10s linear infinite;
+  animation: news-ticker-scroll 15s linear infinite;
 }
 
 @media (min-width: 768px) {
@@ -119,4 +123,3 @@ All colors MUST be HSL.
     animation: news-ticker-scroll 30s linear infinite;
   }
 }
-
